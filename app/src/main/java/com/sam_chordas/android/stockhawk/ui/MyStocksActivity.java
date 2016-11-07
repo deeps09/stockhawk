@@ -49,7 +49,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   private ItemTouchHelper mItemTouchHelper;
   private static final int CURSOR_LOADER_ID = 0;
   private QuoteCursorAdapter mCursorAdapter;
-  private Context mContext;
+  public static Context mContext;
   private Cursor mCursor;
   boolean isConnected;
 
@@ -85,7 +85,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             new RecyclerViewItemClickListener.OnItemClickListener() {
               @Override public void onItemClick(View v, int position) {
                 //TODO:
-                // do something on item click
+                Toast.makeText(MyStocksActivity.this, "Implement next activity", Toast.LENGTH_SHORT).show();
               }
             }));
     recyclerView.setAdapter(mCursorAdapter);
@@ -151,6 +151,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
           .build();
       // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
       // are updated.
+      Toast.makeText(this, "Period Sync triggered", Toast.LENGTH_SHORT).show();
       GcmNetworkManager.getInstance(this).schedule(periodicTask);
     }
   }
@@ -163,7 +164,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
   }
 
   public void networkToast(){
-    Toast.makeText(mContext, getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
+    Toast.makeText(mContext , getString(R.string.network_toast), Toast.LENGTH_SHORT).show();
   }
 
   public void restoreActionBar() {
