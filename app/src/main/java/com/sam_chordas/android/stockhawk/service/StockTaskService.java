@@ -132,6 +132,8 @@ public class StockTaskService extends GcmTaskService {
                         mContext.getContentResolver().update(QuoteProvider.Quotes.CONTENT_URI, contentValues,
                                 null, null);
                     }
+
+                    // Validating the symbol entered by user
                     ArrayList<ContentProviderOperation> cpo = Utils.quoteJsonToContentVals(getResponse);
                     if (cpo.size() != 0)
                         mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY, cpo);

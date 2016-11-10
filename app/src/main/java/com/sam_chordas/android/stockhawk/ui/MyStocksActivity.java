@@ -1,5 +1,6 @@
 package com.sam_chordas.android.stockhawk.ui;
 
+import android.app.AlarmManager;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -8,6 +9,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -85,7 +87,11 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             new RecyclerViewItemClickListener.OnItemClickListener() {
               @Override public void onItemClick(View v, int position) {
                 //TODO:
-                Toast.makeText(MyStocksActivity.this, "Implement next activity", Toast.LENGTH_SHORT).show();
+
+                int id = v.getId();
+                Intent intent = new Intent(getApplicationContext(), DetailsActivity.class);
+                intent.putExtra("id", position);
+                startActivity(intent);
               }
             }));
     recyclerView.setAdapter(mCursorAdapter);
@@ -151,10 +157,46 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
           .build();
       // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
       // are updated.
-      Toast.makeText(this, "Period Sync triggered", Toast.LENGTH_SHORT).show();
+      //Toast.makeText(this, "Period Sync triggered", Toast.LENGTH_SHORT).show();
       GcmNetworkManager.getInstance(this).schedule(periodicTask);
     }
+
+/*    AlarmManager alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
+    Intent intent = new Intent();
+
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+      @Override
+      public void run() {
+        Toast.makeText(MyStocksActivity.this, "Period Sync triggered", Toast.LENGTH_SHORT).show();
+        initiateTask();
+
+      }
+    };
+    handler.postDelayed(runnable, 2000);*/
   }
+
+/*  private void initiateTask() {
+    if (isConnected) {
+      long period = 3L;
+      long flex = 1L;
+      String periodicTag = "periodic";
+
+      // create a periodic task to pull stocks once every hour after the app has been opened. This
+      // is so Widget data stays up to date.
+      PeriodicTask periodicTask = new PeriodicTask.Builder()
+              .setService(StockTaskService.class)
+              .setPeriod(period)
+              .setFlex(flex)
+              .setTag(periodicTag)
+              .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
+              .setRequiresCharging(false)
+              .build();
+      // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
+      // are updated.
+      GcmNetworkManager.getInstance(this).schedule(periodicTask);
+    }
+  }*/
 
 
   @Override
