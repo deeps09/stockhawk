@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="72dp"
-    android:id="@+id/list_item"
-    android:background="?attr/selectableItemBackground"
+    android:id="@+id/widget_list_item"
     android:clickable="true"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -12,7 +11,7 @@
     android:paddingRight="16dp">
 
     <TextView
-        android:id="@+id/stock_symbol"
+        android:id="@+id/widget_list_item_stock_symbol"
         style="@style/StockSymbolTextStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +25,7 @@
         android:gravity="right">
 
         <TextView
-            android:id="@+id/bid_price"
+            android:id="@+id/widget_list_item_bid_price"
             style="@style/BidPriceTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,7 +33,7 @@
             tools:text="1000.00" />
 
         <TextView
-            android:id="@+id/change"
+            android:id="@+id/widget_list_item_change"
             style="@style/PercentChangeTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

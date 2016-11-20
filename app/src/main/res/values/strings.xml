@@ -11,4 +11,7 @@
   <string name="input_prefill" translatable="false"></string>
   <string name="network_toast" translatable="true">Uh-oh! This app requires an internet connection</string>
   <string name="invalid_symbol_toast" translatable="true">No matching symbol found</string>
+  <string name="empty_forecast_list">No data available</string>
+
+  <bool name="use_detail_activity">false</bool>
 </resources>

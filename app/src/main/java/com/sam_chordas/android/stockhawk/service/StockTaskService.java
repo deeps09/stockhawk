@@ -75,6 +75,18 @@ public class StockTaskService extends GcmTaskService {
         }
         if (params.getTag().equals("init") || params.getTag().equals("periodic")) {
             isUpdate = true;
+            /*Handler handler = new Handler(Looper.getMainLooper());
+            final Context context = MyStocksActivity.mContext;
+
+            handler.post(new Runnable() {
+
+                @Override
+                public void run() {
+                    Toast.makeText(context, "Background sync triggered",
+                            Toast.LENGTH_LONG).show();
+                }
+            });*/
+
             initQueryCursor = mContext.getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
                     new String[]{"Distinct " + QuoteColumns.SYMBOL}, null,
                     null, null);
@@ -139,11 +151,13 @@ public class StockTaskService extends GcmTaskService {
                         mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY, cpo);
                     else {
                         Handler handler = new Handler(Looper.getMainLooper());
+                        final Context context = MyStocksActivity.mContext;
+
                         handler.post(new Runnable() {
 
                             @Override
                             public void run() {
-                                Toast.makeText(MyStocksActivity.mContext, getString(R.string.invalid_symbol_toast),
+                                Toast.makeText(context, context.getString(R.string.invalid_symbol_toast),
                                         Toast.LENGTH_LONG).show();
                             }
                         });

@@ -1,5 +1,6 @@
-package com.sam_chordas.android.stockhawk.rest;
+  package com.sam_chordas.android.stockhawk.rest;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -26,12 +27,15 @@ import com.sam_chordas.android.stockhawk.touch_helper.ItemTouchHelperViewHolder;
 public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAdapter.ViewHolder>
     implements ItemTouchHelperAdapter{
 
+  //private static RecyclerViewItemClickListener.OnItemClickListener mClickHandler;
+
   private static Context mContext;
   private static Typeface robotoLight;
   private boolean isPercent;
   public QuoteCursorAdapter(Context context, Cursor cursor){
     super(context, cursor);
     mContext = context;
+    //mClickHandler = clickHandler;
   }
 
   @Override
@@ -43,7 +47,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
     return vh;
   }
 
-  @Override
+  @Override @TargetApi(16)
   public void onBindViewHolder(final ViewHolder viewHolder, final Cursor cursor){
     viewHolder.symbol.setText(cursor.getString(cursor.getColumnIndex("symbol")));
     viewHolder.bidPrice.setText(cursor.getString(cursor.getColumnIndex("bid_price")));
@@ -95,6 +99,7 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
       symbol.setTypeface(robotoLight);
       bidPrice = (TextView) itemView.findViewById(R.id.bid_price);
       change = (TextView) itemView.findViewById(R.id.change);
+      itemView.setOnClickListener(this);
     }
 
     @Override
@@ -109,6 +114,8 @@ public class QuoteCursorAdapter extends CursorRecyclerViewAdapter<QuoteCursorAda
 
     @Override
     public void onClick(View v) {
+      //int pos = getAdapterPosition();
+      //mClickHandler.onItemClick(v, pos);
 
     }
   }

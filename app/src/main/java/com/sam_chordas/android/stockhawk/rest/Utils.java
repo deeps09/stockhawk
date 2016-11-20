@@ -10,7 +10,10 @@ import com.sam_chordas.android.stockhawk.data.QuoteColumns;
 import com.sam_chordas.android.stockhawk.data.QuoteProvider;
 import com.sam_chordas.android.stockhawk.ui.MyStocksActivity;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -96,6 +99,7 @@ public class Utils {
                     jsonObject.getString("ChangeinPercent"), true));
             builder.withValue(QuoteColumns.CHANGE, truncateChange(change, false));
             builder.withValue(QuoteColumns.ISCURRENT, 1);
+            builder.withValue(QuoteColumns.CREATED, getFormattedDate());
             if (change.charAt(0) == '-') {
                 builder.withValue(QuoteColumns.ISUP, 0);
             } else {
@@ -106,5 +110,14 @@ public class Utils {
             Log.d(LOG_TAG, "truncateChange: Exception occurred! ", e);
         }
         return builder.build();
+    }
+
+    public static String getFormattedDate (){
+        Calendar cal = Calendar.getInstance();
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM" + "\n" + "HH:mm");
+        String strDate = sdf.format(cal.getTime());
+        Log.d(Utils.class.getSimpleName(), "getFormattedDate: " + strDate);
+        return strDate;
     }
 }

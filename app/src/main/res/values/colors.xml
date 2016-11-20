@@ -4,4 +4,9 @@
   <color name="material_blue_500">#2196F3</color>
   <color name="material_red_700">#D50000</color>
   <color name="material_green_700">#00C853</color>
+
+  <color name="chart_axis_color">#ECEFF1</color>
+  <color name="chart_blue">#3903A9F4</color>  <!--#49546E7A-->
+  <color name="chart_bg_color">#37474F</color>
+  <color name="chart_label_color">#ECEFF1</color>
 </resources>
