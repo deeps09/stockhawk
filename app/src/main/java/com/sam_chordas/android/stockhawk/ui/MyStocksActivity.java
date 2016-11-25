@@ -21,6 +21,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -55,31 +56,48 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
     public static Context mContext;
     private Cursor mCursor;
     boolean isConnected;
+    private TextView recyclerEmptyView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_stocks);
+
         mContext = this;
+        recyclerEmptyView = (TextView) findViewById(R.id.recycler_empty);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
+        recyclerView.setVisibility(View.VISIBLE);
+        recyclerEmptyView.setVisibility(View.GONE);
+
         ConnectivityManager cm =
                 (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         isConnected = activeNetwork != null &&
                 activeNetwork.isConnectedOrConnecting();
-        setContentView(R.layout.activity_my_stocks);
+
         // The intent service is for executing immediate pulls from the Yahoo API
         // GCMTaskService can only schedule tasks, they cannot execute immediately
+        Cursor cursor = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI,
+                new String[]{QuoteColumns.SYMBOL}, null,
+                null, null);
+
         mServiceIntent = new Intent(this, StockIntentService.class);
         if (savedInstanceState == null) {
             // Run the initialize task service so that some stocks appear upon an empty database
             mServiceIntent.putExtra("tag", "init");
             if (isConnected) {
                 startService(mServiceIntent);
+            } else if (!isConnected && cursor.getCount() == 0) {
+                recyclerEmptyView.setVisibility(View.VISIBLE);
+                recyclerView.setVisibility(View.GONE);
             } else {
                 networkToast();
             }
         }
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this);
 
@@ -104,7 +122,6 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                     }
                 }));
         recyclerView.setAdapter(mCursorAdapter);
-
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.attachToRecyclerView(recyclerView);
@@ -152,7 +169,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
 
         mTitle = getTitle();
         if (isConnected) {
-            long period = 60L; //3600L;
+            long period = 60 * 30L; //3600L;
             long flex = 10L; //120L
             String periodicTag = "periodic";
 
@@ -171,43 +188,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
             //Toast.makeText(this, "Period Sync triggered", Toast.LENGTH_SHORT).show();
             GcmNetworkManager.getInstance(this).schedule(periodicTask);
         }
-
-/*    AlarmManager alarmMgr = (AlarmManager) getSystemService(ALARM_SERVICE);
-    Intent intent = new Intent();
-
-    Handler handler = new Handler();
-    Runnable runnable = new Runnable() {
-      @Override
-      public void run() {
-        Toast.makeText(MyStocksActivity.this, "Period Sync triggered", Toast.LENGTH_SHORT).show();
-        initiateTask();
-
-      }
-    };
-    handler.postDelayed(runnable, 2000);*/
     }
-
-/*  private void initiateTask() {
-    if (isConnected) {
-      long period = 3L;
-      long flex = 1L;
-      String periodicTag = "periodic";
-
-      // create a periodic task to pull stocks once every hour after the app has been opened. This
-      // is so Widget data stays up to date.
-      PeriodicTask periodicTask = new PeriodicTask.Builder()
-              .setService(StockTaskService.class)
-              .setPeriod(period)
-              .setFlex(flex)
-              .setTag(periodicTag)
-              .setRequiredNetwork(Task.NETWORK_STATE_CONNECTED)
-              .setRequiresCharging(false)
-              .build();
-      // Schedule task with tag "periodic." This ensure that only the stocks present in the DB
-      // are updated.
-      GcmNetworkManager.getInstance(this).schedule(periodicTask);
-    }
-  }*/
 
 
     @Override
@@ -242,9 +223,9 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            return true;
+//        }
 
         if (id == R.id.action_change_units) {
             // this is for changing stock changes from percent value to dollar value

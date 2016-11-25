@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.db.chart.model.LineSet;
 import com.db.chart.renderer.AxisRenderer;
@@ -81,8 +82,10 @@ public class DetailsActivity extends AppCompatActivity {
         //mTv.setText(prices);
         float max = Collections.max(price);
         float min = Collections.min(price);
-        int step = (int) (max-min);
+        int step = 10;
 
+        if (max-min <= 5)
+            step = 1;
 
 
         Log.d("DetailsActivity","Step = " + String.valueOf(step) + " Min = " + String.valueOf( (int)min) + " Max = " + String.valueOf((int)max));
@@ -96,9 +99,16 @@ public class DetailsActivity extends AppCompatActivity {
         mLineChartView.setAxisColor(getResources().getColor(R.color.chart_axis_color));
         mLineChartView.setAxisThickness(2);
         mLineChartView.setLabelsColor(getResources().getColor(R.color.chart_label_color));
-        mLineChartView.setAxisBorderValues((int) min-10, (int) max);
+        mLineChartView.setAxisBorderValues((int) min-step, (int) max+step);
         mLineChartView.setBackgroundColor(getResources().getColor(R.color.chart_bg_color));
         mLineChartView.show();
 
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        startActivity(new Intent(this, MyStocksActivity.class));
+        finish();
+        return true;
     }
 }

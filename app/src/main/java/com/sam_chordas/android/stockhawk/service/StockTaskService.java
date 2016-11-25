@@ -3,6 +3,7 @@ package com.sam_chordas.android.stockhawk.service;
 import android.content.ContentProviderOperation;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.OperationApplicationException;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
@@ -147,9 +148,10 @@ public class StockTaskService extends GcmTaskService {
 
                     // Validating the symbol entered by user
                     ArrayList<ContentProviderOperation> cpo = Utils.quoteJsonToContentVals(getResponse);
-                    if (cpo.size() != 0)
+                    if (cpo.size() != 0) {
                         mContext.getContentResolver().applyBatch(QuoteProvider.AUTHORITY, cpo);
-                    else {
+                        Utils.updateWidget(mContext);
+                    } else {
                         Handler handler = new Handler(Looper.getMainLooper());
                         final Context context = MyStocksActivity.mContext;
 
@@ -158,7 +160,7 @@ public class StockTaskService extends GcmTaskService {
                             @Override
                             public void run() {
                                 Toast.makeText(context, context.getString(R.string.invalid_symbol_toast),
-                                        Toast.LENGTH_LONG).show();
+                                        Toast.LENGTH_SHORT).show();
                             }
                         });
                     }

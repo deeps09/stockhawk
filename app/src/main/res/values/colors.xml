@@ -9,4 +9,6 @@
   <color name="chart_blue">#3903A9F4</color>  <!--#49546E7A-->
   <color name="chart_bg_color">#37474F</color>
   <color name="chart_label_color">#ECEFF1</color>
+
+  <color name="activated">#455A64</color>
 </resources>

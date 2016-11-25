@@ -3,6 +3,7 @@ package com.sam_chordas.android.stockhawk.rest;
 import android.app.Activity;
 import android.content.ContentProviderOperation;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class Utils {
     private static String LOG_TAG = Utils.class.getSimpleName();
 
     public static boolean showPercent = true;
+    public final static String DATA_UPDATED_ACTION = "com.sam_chordas.android.stockhawk.DATA_UPDATED";
 
     public static ArrayList quoteJsonToContentVals(String JSON) {
         ArrayList<ContentProviderOperation> batchOperations = new ArrayList<>();
@@ -119,5 +121,10 @@ public class Utils {
         String strDate = sdf.format(cal.getTime());
         Log.d(Utils.class.getSimpleName(), "getFormattedDate: " + strDate);
         return strDate;
+    }
+
+    public static void updateWidget (Context mContext){
+        Intent dataUpdatedIntent = new Intent(DATA_UPDATED_ACTION);
+        mContext.sendBroadcast(dataUpdatedIntent);
     }
 }

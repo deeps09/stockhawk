@@ -3,7 +3,7 @@
 
   <string name="action_example">Example action</string>
 
-  <string name="action_settings">Settings</string>
+  <string name="action_settings" translatable="true">Settings</string>
   <string name="action_change_units" translatable="true">Change Units</string>
   <string name="symbol_search" translatable="true">Symbol Search</string>
   <string name="content_test" translatable="true">Search for a Stock Symbol</string>
@@ -11,7 +11,8 @@
   <string name="input_prefill" translatable="false"></string>
   <string name="network_toast" translatable="true">Uh-oh! This app requires an internet connection</string>
   <string name="invalid_symbol_toast" translatable="true">No matching symbol found</string>
-  <string name="empty_forecast_list">No data available</string>
+  <string name="empty_forecast_list" translatable="true">No data available</string>
 
-  <bool name="use_detail_activity">false</bool>
+  <!-- Content descriptions-->
+  <string name="content_desc_fab" translatable="true">Add new scrip</string>
 </resources>

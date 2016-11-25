@@ -8,7 +8,9 @@
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recycler_view"
-      android:background="@drawable/touch_selector_dark"
+      android:clickable="true"
+      android:focusable="true"
+      android:focusableInTouchMode="true"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       />
@@ -17,6 +19,7 @@
       android:id="@+id/fab"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:contentDescription="@string/content_desc_fab"
       android:layout_gravity="bottom|right"
       android:layout_margin="16dp"
       android:src="@drawable/ic_add_white_24dp"
@@ -28,4 +31,14 @@
       fab:layout_anchor="recycler_view"
       fab:layout_anchorGravity="bottom | end"
       />
+
+  <TextView
+      android:id="@+id/recycler_empty"
+      android:visibility="gone"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:fontFamily="sans-serif-condensed"
+      android:gravity="center"
+      android:text="@string/empty_forecast_list"
+      android:textAppearance="?android:textAppearanceLarge" />
 </FrameLayout>
