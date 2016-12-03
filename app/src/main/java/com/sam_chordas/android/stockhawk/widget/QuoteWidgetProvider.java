@@ -28,7 +28,7 @@ public class QuoteWidgetProvider extends AppWidgetProvider {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 
-        Log.d(TAG, "onUpdate: ");
+        //Log.d(TAG, "onUpdate: ");
 
         for (int appWidgetId : appWidgetIds) {
             RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.quote_widget);

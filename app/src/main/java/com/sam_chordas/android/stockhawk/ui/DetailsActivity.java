@@ -46,8 +46,6 @@ public class DetailsActivity extends AppCompatActivity {
         Cursor data = getContentResolver().query(QuoteProvider.Quotes.CONTENT_URI, new String[]{QuoteColumns.BIDPRICE, QuoteColumns.CREATED},
                 QuoteColumns.SYMBOL + "= ?", new String[]{symbol}, null);
 
-        Log.d("DetailsActivity", DatabaseUtils.dumpCursorToString(data));
-
         List<Float> price = new ArrayList<>();
         List<String> label = new ArrayList<>();
 
@@ -88,7 +86,7 @@ public class DetailsActivity extends AppCompatActivity {
             step = 1;
 
 
-        Log.d("DetailsActivity","Step = " + String.valueOf(step) + " Min = " + String.valueOf( (int)min) + " Max = " + String.valueOf((int)max));
+        //Log.d("DetailsActivity","Step = " + String.valueOf(step) + " Min = " + String.valueOf( (int)min) + " Max = " + String.valueOf((int)max));
         mLineChartView = (LineChartView) findViewById(R.id.linechart);
 
         LineSet dataSet = new LineSet(labels, bid_price);
