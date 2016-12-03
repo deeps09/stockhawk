@@ -12,7 +12,7 @@
   <string name="network_toast" translatable="true">Uh-oh! This app requires an internet connection</string>
   <string name="invalid_symbol_toast" translatable="true">No matching symbol found</string>
   <string name="empty_forecast_list" translatable="true">No data available</string>
-  <string name="no_scrip_found" translatable="true">This stock is already saved!</string>
+  <string name="stock_already_saved" translatable="true">This stock is already saved!</string>
 
   <!-- Content descriptions-->
   <string name="content_desc_fab" translatable="true">Add new scrip</string>

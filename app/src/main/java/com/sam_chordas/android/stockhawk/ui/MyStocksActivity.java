@@ -1,6 +1,5 @@
 package com.sam_chordas.android.stockhawk.ui;
 
-import android.app.AlarmManager;
 import android.app.LoaderManager;
 import android.content.Context;
 import android.content.CursorLoader;
@@ -9,7 +8,6 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
@@ -142,7 +140,7 @@ public class MyStocksActivity extends AppCompatActivity implements LoaderManager
                                             new String[]{input.toString()}, null);
                                     if (c.getCount() != 0) {
                                         Toast toast =
-                                                Toast.makeText(MyStocksActivity.this, getString(R.string.no_scrip_found),
+                                                Toast.makeText(MyStocksActivity.this, getString(R.string.stock_already_saved),
                                                         Toast.LENGTH_LONG);
                                         toast.setGravity(Gravity.CENTER, Gravity.CENTER, 0);
                                         toast.show();
